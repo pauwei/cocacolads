@@ -8,7 +8,7 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 
 ### Retrieving Data
 
-#### Retrieving Temperature Data
+#### Retrieving Temperature Data - temperatureretrieval.py
 	Input:
 		start year: 1976
 		end year: 2022
@@ -21,7 +21,7 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 			temperature object: value, rank, departure from mean
 			example: sample_data['2000']['california']['200001']
 
-#### Retrieving Unemployment Data
+#### Retrieving Unemployment Data - unemploymentretrieval.py
     Input:
 		start year: 1976
 		end year: 2022
@@ -31,15 +31,15 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 			unemployment object: unmployment rate, employment-population ratio
 			example: sample_data['2000']['alabama']['jan']
 
-### Testing
+### Testing - testing.py
     Data Statistics: mean, stdv, covariance
     Pearson's Correlation
     Spearman's Correlation
 
-### Fitting
+### Fitting - fitting.py
     If correlated, fit regression line
 
-### Visualization
+### Visualization - visualize.py
     Follow plots were created by year
         Temperature vs Unemployment Rate
 		Temperature vs Unemployment Rate (1 year lag)
@@ -50,6 +50,9 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 		Temperature vs Unemployment Rate (-10 year lag)
 
     Gif to visualize change over years by stitching plots
+
+### Execution - main.py
+    Functions are imported and executed
 
 ## Future work
     City temperature vs City CPI
