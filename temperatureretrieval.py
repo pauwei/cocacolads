@@ -1,0 +1,1 @@
+# Retrieve temperature data from https://www.ncdc.noaa.gov/cag/statewide/time-series
