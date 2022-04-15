@@ -9,27 +9,27 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 ### Retrieving Data
 
 #### Retrieving Temperature Data
-		Input:
-			start year: 1976
-			end year: 2022
-			state: [all]
-			parameter: average temperature
-			time scale: 1-Month
-			month: [all]
-		Output: 
-			3d array [year (dict)][state (dict)][month (dict)]
-				temperature object: value, rank, departure from mean
-				example: sample_data['2000']['california']['200001']
+	Input:
+		start year: 1976
+		end year: 2022
+		state: [all]
+		parameter: average temperature
+		time scale: 1-Month
+		month: [all]
+	Output: 
+		3d array [year (dict)][state (dict)][month (dict)]
+			temperature object: value, rank, departure from mean
+			example: sample_data['2000']['california']['200001']
 
 #### Retrieving Unemployment Data
-        Input:
-			start year: 1976
-			end year: 2022
-			Unemployment
-		Output:
-			3d array [year (dict)][state (dict)][month (dict)] => unmployment object
-				unemployment object: unmployment rate, employment-population ratio
-				example: sample_data['2000']['alabama']['jan']
+    Input:
+		start year: 1976
+		end year: 2022
+		Unemployment
+	Output:
+		3d array [year (dict)][state (dict)][month (dict)] => unmployment object
+			unemployment object: unmployment rate, employment-population ratio
+			example: sample_data['2000']['alabama']['jan']
 
 ### Testing
     Data Statistics: mean, stdv, covariance
