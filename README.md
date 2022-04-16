@@ -4,6 +4,16 @@
 
 Demonstrate whether there is a correlation between weather and unmployment. Data ranges from 1976 to 2022, includes all 50 states, and divided by monthly units.
 
+## Setup
+
+### Libraries
+
+The following libraries were used:
+- `requests`
+- `csv`
+- `json`
+- `pickle`
+
 ## Approach
 
 ### Retrieving Data
