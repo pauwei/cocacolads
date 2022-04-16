@@ -19,7 +19,7 @@ Demonstrate whether there is a correlation between weather and unmployment. Data
 	Output: 
 		3d array [year (dict)][state (dict)][month (dict)]
 			temperature object: value, rank, departure from mean
-			example: sample_data['2000']['california']['200001']
+			example: sample_data['2000']['California']['January']
 
 #### Retrieving Unemployment Data - `unemploymentretrieval.py`
     Input:
