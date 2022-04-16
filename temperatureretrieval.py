@@ -8,6 +8,7 @@ import csv
 
 weather = {}
 
+# sets up an empty weather dictionary
 def initialize_dictionary():
     num_to_state = {
         1: "Alabama",
@@ -71,11 +72,9 @@ def initialize_dictionary():
 
     for year in range (1976, 2023):
         year_str = str(year)
-        weather[year_str] = ''
         state_dict = {}
         for state in range (1, 51):
             state_name = num_to_state[state]
-            #month_dict = {"January": {}, "February": {}, "March": {}, "April": {}, "May": {}, "June": {}, "July": {}, "August": {}, "September": {}, "October": {}, "November": {}, "December": {}}
             state_dict[state_name] = {}
 
         weather[year_str] = state_dict
