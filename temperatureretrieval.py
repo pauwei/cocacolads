@@ -104,6 +104,8 @@ def download_all():
 
 
 # takes all the information out of the weather_data folder and puts it into a dictionary
+    # Example of how to retrieve information
+    # print(weather['2022']['Florida']['February'])
 def upload_data():
     # goes through every state
     for state in range(1, 51):
@@ -139,6 +141,4 @@ def upload_data():
 
                     cnt = cnt + 1
 
-    print(weather['2022']['Florida']['February'])
-    pass
-
+    return weather
