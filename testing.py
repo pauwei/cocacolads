@@ -113,7 +113,7 @@ def mean_by_months():
             tempValues[str(year)][num_to_state[state]] = tempObj
             unemployValues[str(year)][num_to_state[state]] = unemployObj
 
-def calculate_stats():
+def get_combined_list():
     tempValues = []
     unemployValues = []
 
@@ -122,7 +122,10 @@ def calculate_stats():
             for month in range (1,13):
                 tempValues.append(float(weather[str(year)][num_to_state[state]][num_to_month[month]]['value']))
                 unemployValues.append(float(unemployment[str(year)][num_to_state[state]][num_to_month[month]]['UnemploymentRate']))
-                    
+    return tempValues, unemployValues
+
+def calculate_stats(tempValues, unemployValues):
+    tempValues, unemployValues = get_combined_list()
     mean_temp = np.mean(tempValues)
     mean_unemploy = np.mean(unemployValues)
     sd_temp = np.std(tempValues)
