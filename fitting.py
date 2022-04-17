@@ -12,3 +12,6 @@ def regression_plot():
     xseq = np.linspace(0,10, num=100)
     plt.plot(xseq, a + b * xseq, color ='k')
     plt.show()
+
+#Maybe check up on temperature vs unemployment for covid?
+#Bucket temperature values to find possible higher mean?
