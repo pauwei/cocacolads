@@ -1,18 +1,17 @@
 # Calculate relevant statistics
 # Useful resource: https://machinelearningmastery.com/how-to-use-correlation-to-understand-the-relationship-between-variables/
-from os import stat
-from turtle import st
 import temperatureretrieval as temperature
-import statistics
+import unemploymentretrieval as unemploy
+from scipy import stats
+import numpy as np
 
 # getting temperature data
 temperature.initialize_dictionary()
 weather = temperature.upload_data()
+unemployment = unemploy.getUnemploymentData(writeToFile=False, fromFile=True)
 
 # Mean, Standard deviation, Covariance
 
-
-# Mean of Weather by state for year: 
 num_to_state = {
     1: "Alabama",
     2: "Alaska",
@@ -24,53 +23,45 @@ num_to_state = {
     8: "Delaware",
     9: "Florida",
     10: "Georgia",
-    11: "Hawaii",
-    12: "Idaho",
-    13: "Illinois",
-    14: "Indiana",
-    15: "Iowa",
-    16: "Kansas",
-    17: "Kentucky",
-    18: "Louisiana",
-    19: "Maine",
-    20: "Maryland",
-    21: "Massachusetts",
-    22: "Michigan",
-    23: "Minnesota",
-    24: "Mississippi",
-    25: "Missouri",
-    26: "Montana",
-    27: "Nebraska",
-    28: "Nevada",
-    29: "New Hampshire",
-    30: "New Jersey",
-    31: "New Mexico",
-    32: "New York",
-    33: "North Carolina",
-    34: "North Dakota",
-    35: "Ohio",
-    36: "Oklahoma",
-    37: "Oregon",
-    38: "Pennsylvania",
-    39: "Rhode Island",
-    40: "South Carolina",
-    41: "South Dakota",
-    42: "Tennessee",
-    43: "Texas",
-    44: "Utah",
-    45: "Vermont",
-    46: "Virginia",
-    47: "Washington",
-    48: "West Virginia",
-    49: "Wisconsin",
-    50: "Wyoming",
-    51: "District of Columbia",
-    52: "American Samoa",
-    53: "Guam",
-    54: "Northern Mariana Islands",
-    55: "Puerto Rico",
-    56: "United States Minor Outlying Islands",
-    57: "U.S. Virgin Islands",
+    11: "Idaho",
+    12: "Illinois",
+    13: "Indiana",
+    14: "Iowa",
+    15: "Kansas",
+    16: "Kentucky",
+    17: "Louisiana",
+    18: "Maine",
+    19: "Maryland",
+    20: "Massachusetts",
+    21: "Michigan",
+    22: "Minnesota",
+    23: "Mississippi",
+    24: "Missouri",
+    25: "Montana",
+    26: "Nebraska",
+    27: "Nevada",
+    28: "New Hampshire",
+    29: "New Jersey",
+    30: "New Mexico",
+    31: "New York",
+    32: "North Carolina",
+    33: "North Dakota",
+    34: "Ohio",
+    35: "Oklahoma",
+    36: "Oregon",
+    37: "Pennsylvania",
+    38: "Rhode Island",
+    39: "South Carolina",
+    40: "South Dakota",
+    41: "Tennessee",
+    42: "Texas",
+    43: "Utah",
+    44: "Vermont",
+    45: "Virginia",
+    46: "Washington",
+    47: "West Virginia",
+    48: "Wisconsin",
+    49: "Wyoming",
 }
 
 num_to_month = {
@@ -89,29 +80,61 @@ num_to_month = {
 }
 
 # Finds the Mean, SD, and Var for the temperature data
-means = {} 
+def mean_by_months():
+    tempValues = {} 
+    unemployValues = {}
 
-for year in range (1976, 2023):
-    state_dic = {}
-    for state in range (1,51):
-        temp = [0]
-        state_dic[num_to_state[state]] = {}
-        means[str(year)] = state_dic 
-        
-        for month in range (1,13):
-            try:
-                temp.append(float(weather[str(year)][num_to_state[state]][num_to_month[month]]['value']))
-            except KeyError: #if no data is found for the state at the current month, set the value as 0 
-                temp.append(0)
-        
-        obj = {
-            'Mean' : statistics.mean(temp),
-            'SD' : statistics.stdev(temp),
-            'Variance' : statistics.variance(temp)
-        }
-        
-        means[str(year)][num_to_state[state]] = obj
-    
-# Run Pearson's Correlation
+    for year in range (1976, 2022):
+        state_dic = {}
+        for state in range (1,50):
+            weatherData = [0]
+            unemployData = [0]
+            state_dic[num_to_state[state]] = {}
+            tempValues[str(year)] = state_dic 
+            unemployValues[str(year)] = state_dic
+            
+            for month in range (1,13):
+                weatherData.append(float(weather[str(year)][num_to_state[state]][num_to_month[month]]['value']))
+                unemployData.append(float(unemployment[str(year)][num_to_state[state]][num_to_month[month]]['UnemploymentRate']))
+            
+            # calculates mean, sd, and var not including NaN Val
+            tempObj = {
+                'Mean' : np.nanmean(weatherData),
+                'SD' : np.nanstd(weatherData),
+                'Variance' : np.nanvar(weatherData)
+            }
+            
+            unemployObj = {
+                'Mean' : np.nanmean(unemployData),
+                'SD' : np.nanstd(unemployData),
+                'Variance' : np.nanvar(unemployData)
+            }
+            
+            tempValues[str(year)][num_to_state[state]] = tempObj
+            unemployValues[str(year)][num_to_state[state]] = unemployObj
 
-# Run Spearman's Correlation
+def calculate_stats():
+    tempValues = []
+    unemployValues = []
+
+    for year in range (1976, 2022):
+        for state in range (1,50):
+            for month in range (1,13):
+                tempValues.append(float(weather[str(year)][num_to_state[state]][num_to_month[month]]['value']))
+                unemployValues.append(float(unemployment[str(year)][num_to_state[state]][num_to_month[month]]['UnemploymentRate']))
+                    
+    mean_temp = np.mean(tempValues)
+    mean_unemploy = np.mean(unemployValues)
+    sd_temp = np.std(tempValues)
+    sd_unemploy = np.std(unemployValues)
+    combine_List = []
+    combine_List.append(tempValues)
+    combine_List.append(unemployValues)
+        
+    # Calulating Pearson's Correlation/Covariance/Spearman's Correlation
+    cov = np.cov(combine_List)
+    pearson = stats.pearsonr(tempValues, unemployValues)
+    spearman = stats.spearmanr(tempValues, unemployValues)
+    # print(f'Mean Temperature: {mean_temp} \nMean Unemployment Rate: {mean_unemploy} \nSD Temperature: {sd_temp}\nSD Unemployment Rate: {sd_unemploy} \nCovariance: {cov}\nPearson\'s: {pearson} \nSpearman\'s: {spearman}')
+    return mean_temp, mean_unemploy, sd_temp, sd_unemploy, cov, pearson, spearman
+
